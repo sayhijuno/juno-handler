@@ -1,0 +1,50 @@
+{
+    "title": "Juno: A vLLM Handler",
+    "description": "A simple fast and beautiful vLLM worker for Runpod Serverless",
+    "type": "serverless",
+    "category": "language",
+    "iconUrl": "https://raw.githubusercontent.com/DeJayDev/juno-handler/refs/heads/main/.runpod/juno-glasses.png",
+    "config": {
+        "runsOn": "GPU",
+        "gpuCount": 1,
+        "containerDiskInGb": 50,
+        "presets": [
+            {
+                "name": "Llama 3.3 70B",
+                "defaults": {
+                    "MODEL_NAME": "meta-llama/Llama-3.3-70B-Instruct"
+                }
+            },
+            {
+                "name": "Olmo 3 32B",
+                "defaults": {
+                    "MODEL_NAME": "allenai/Olmo-3-32B-Think"
+                }
+            },
+            {
+                "name": "Qwen3 VL 30B A3B",
+                "defaults": {
+                    "MODEL_NAME": "Qwen/Qwen3-VL-30B-A3B-Thinking"
+                }
+            },
+            {
+                "name": "Magistral Small 2506 (Unsloth)",
+                "defaults": {
+                    "MODEL_NAME": "unsloth/Magistral-Small-2506"
+                }
+            }
+        ],
+        "env": [
+            {
+                "key": "MODEL_NAME",
+                "input": {
+                    "type": "huggingface",
+                    "name": "HuggingFace Model Name",
+                    "description": "The name of the HuggingFace model to use. For example, `Qwen/Qwen3-Next-80B-A3B-Instruct`.",
+                    "default": "Qwen/Qwen3-Next-80B-A3B-Instruct",
+                    "required": true
+                }
+            }
+        ]
+    }
+}

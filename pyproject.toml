@@ -1,34 +1,40 @@
 [project]
-version = "0.1.0"
-description = ""
+name = "juno-handler"
+version = "1.0.0"
+description = "The Juno Handler is an example of my ideal vLLM worker."
 authors = [
-    {name = "Dj Isaac", email = "contact@dejaydev.com"}
+    { name = "Dj Isaac", email = "contact@dejaydev.com" },
 ]
-license = "MIT"
+requires-python = ">=3.12,<3.14"
 readme = "README.md"
-name = "juno"
-requires-python = "~=3.12"
+license = "MIT"
+dependencies = [
+    "runpod>=1.7.7",
+    "vllm>=0.11.2",
+    
+    # Speedups, hf-transfer is supposed to be in the base image but it's not - sorry.
+    "hf-transfer>=0.1.9",
+    "torch>=2.8.0",
+    "torchvision>=0.23.0",
+]
 
+[tool.uv]
+package = false
+index-strategy = "unsafe-best-match"
 
-[tool.poetry]
-package-mode = false
+[[tool.uv.index]]
+name = "flashinfer"
+url = "https://flashinfer.ai/whl/cu128"
 
+[[tool.uv.index]]
+name = "torch"
+url = "https://download.pytorch.org/whl/cu128"
 
-[tool.poetry.dependencies]
-python = "~=3.12.8"
-vllm = "^0.7.2"
-mistral_common = "1.5.2"
-runpod = "1.7.7"
-flashinfer-python = { source = "flashinfer-indexes" }
-python-dotenv = "^1.0.1"
-
-
-[[tool.poetry.source]]
-name = "flashinfer-indexes"
-url = "https://flashinfer.ai/whl/cu124/torch2.5/"
-priority = "supplemental"
-
+[tool.uv.sources]
+flashinfer-jit-cache = { index = "flashinfer" }
+torch = { index = "torch" }
+torchvision = { index = "torch" }
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

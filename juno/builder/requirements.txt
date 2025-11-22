@@ -1,5 +1,0 @@
-vllm==0.7.3
-mistral_common>=1.5.2
-hf_transfer==0.1.9
-runpod==1.7.7
-

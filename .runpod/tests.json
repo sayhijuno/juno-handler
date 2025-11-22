@@ -1,0 +1,29 @@
+{
+    "tests": [
+        {
+            "name": "validation_text_input",
+            "input": {
+                "text": "What is Runpod?",
+                "language": "en"
+            },
+            "timeout": 10000
+        }
+    ],
+    "config": {
+        "gpuTypeId": "NVIDIA H100 80GB HBM3",
+        "gpuCount": 1,
+        "env": [
+            {
+                "key": "MODEL_NAME",
+                "value": "unsloth/Qwen3-4B"
+            }
+        ],
+        "allowedCudaVersions": [
+            "13.0",
+            "12.9",
+            "12.8",
+            "12.7",
+            "12.6"
+        ]
+    }
+}
