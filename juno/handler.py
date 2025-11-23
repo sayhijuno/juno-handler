@@ -21,23 +21,7 @@ DEFAULT_TEMPERATURE = float(os.getenv("MODEL_TEMPERATURE") or "0.15")
 DEFAULT_MAX_TOKENS = int(os.getenv("MAX_SAMPLING_TOKENS") or "32768")
 DEFAULT_TOP_P = float(os.getenv("TOP_P") or "0.95")
 
-if not MODEL:
-    print("Define a MODEL_NAME...")
-    os._exit(-1)
-
-log.info("Loading {}...".format(MODEL))
-
-model = LLM(
-    model=MODEL,
-    tokenizer_mode=TOKENIZER or "auto",
-    config_format=CONFIG_FORMAT or "auto",
-    load_format=LOAD_FORMAT or "auto",
-    quantization=QUANTIZATION,
-    max_model_len=MAX_MODEL_LEN,
-    tensor_parallel_size=int(os.getenv("RUNPOD_GPU_COUNT") or "1"),
-    gpu_memory_utilization=float(os.getenv("GPU_MEMORY_UTILIZATION") or "0.9"),
-)
-
+model = None
 
 def handler(job):
     input_validation = validate(job["input"], VALIDATIONS)
@@ -113,4 +97,22 @@ def handler(job):
     }
 
 
-runpod.serverless.start({"handler": handler})
+if __name__ == '__main__':
+    if not MODEL:
+        print("Define a MODEL_NAME...")
+        os._exit(-1)
+
+    log.info("Loading {}...".format(MODEL))
+
+    model = LLM(
+        model=MODEL,
+        tokenizer_mode=TOKENIZER or "auto",
+        config_format=CONFIG_FORMAT or "auto",
+        load_format=LOAD_FORMAT or "auto",
+        quantization=QUANTIZATION,
+        max_model_len=MAX_MODEL_LEN,
+        tensor_parallel_size=int(os.getenv("RUNPOD_GPU_COUNT") or "1"),
+        gpu_memory_utilization=float(os.getenv("GPU_MEMORY_UTILIZATION") or "0.9"),
+    )
+
+    runpod.serverless.start({"handler": handler})
