@@ -1,8 +1,10 @@
 services:
   test:
     build: .
+    command: ["python", "-m", "juno.handler", "--rp_serve_api", "--rp_api_host", "0.0.0.0"]
     environment: # I have a 3070, so we're not testing on a very large model and enable a lower memory utilization.
       - MODEL_NAME=unsloth/Qwen3-4B
+      - MODEL_MAX_LEN=4096
       - GPU_MEMORY_UTILIZATION=0.8
     ports:
       - "8000:8000"

@@ -18,4 +18,4 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --no-dev
 
 COPY juno ./juno
-CMD ["python", "-m", "juno.handler", "--rp_serve_api", "--rp_api_host", "0.0.0.0"]
+CMD ["python", "-m", "juno.handler"]
