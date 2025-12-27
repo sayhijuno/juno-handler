@@ -106,7 +106,7 @@ def handler(job):
 if __name__ == '__main__':
     if not MODEL:
         print("Define a MODEL_NAME...")
-        sys.exit(-1)
+        sys.exit(1)
 
     log.info("Loading {}...".format(MODEL))
 
