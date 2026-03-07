@@ -103,10 +103,11 @@ def handler(job):
 
     message = {
         "role": "assistant",
-        "reasoning_content": reasoning_content,
         "content": text,
     }
 
+    if reasoning_content:
+        message["reasoning_content"] = reasoning_content
     if tool_calls:
         message["tool_calls"] = tool_calls
 
@@ -118,7 +119,7 @@ def handler(job):
         "choices": [{
             "index": 0,
             "message": message,
-            "finish_reason": output.finish_reason,
+            "finish_reason": "tool_calls" if tool_calls else output.finish_reason,
         }],
         "usage": {
             "prompt_tokens": len(result.prompt_token_ids or []),
